@@ -13,7 +13,6 @@ document.querySelector('.search').addEventListener('click', function () {
 });
 
 const addCurWeather = (data) => {
-//debugger;
     curWeather = {
       city: data.name || null,
       description: data.weather[0].main || null,
@@ -26,7 +25,8 @@ const addCurWeather = (data) => {
 };
 
 const addFiveDay = (data) => {
-//debugger;
+  fiveDayForecast = [];
+
   for (i=7; i<data.list.length; i += 8){
     const curDay = {
       description: data.list[i].weather[0].main || null,
@@ -61,11 +61,11 @@ const fetchFiveDay = (city) => {
 }
 
 const renderCurWeather = () => {
-  //debugger;
   document.querySelector('.current-weather').replaceChildren();
 
     const curWeatherTemplate = 
-      `<div class = "col-md-4 d-flex justify-content-between align-items-center">
+      `
+      <div class = "col-md-4 d-flex justify-content-between align-items-center">
         <div class = "d-flex flex-column text-center justify-content-center">
             <h2>${curWeather.temp}\u00B0F</h2>
             <h3>${curWeather.city}</h3>
@@ -74,8 +74,28 @@ const renderCurWeather = () => {
         <div>
             <img src="https://openweathermap.org/img/wn/${curWeather.icon}@2x.png" alt="Weather Icon">
         </div>
-      </div>`;
+      </div>
+      `;
 
     document.querySelector('.current-weather').insertAdjacentHTML('beforeend', curWeatherTemplate);
 };
 
+const renderFiveDay = () => {
+  document.querySelector('.five-day').replaceChildren();
+
+  const fiveDayTemplate = fiveDayForecast.map(day => {
+    return `
+      <div class="col-md-2 col-sm-4">
+          <div class="card p-2 shadow-sm">
+              <div class="card-body">
+                  <p class="card-text">${day.description}</p>
+                  <h3 class="card-title">${day.temp}\u00B0F</h3>
+                  <img src="https://openweathermap.org/img/wn/${day.icon}@2x.png"" alt="Icon">
+                  <p class="card-text fw-bold">${day.day}</p>
+              </div>
+          </div>
+      </div>`;
+  }).join('');
+  
+  document.querySelector('.five-day').insertAdjacentHTML('beforeend', fiveDayTemplate);
+};
