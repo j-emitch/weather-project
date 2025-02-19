@@ -8,7 +8,6 @@ document.querySelector('.search').addEventListener('click', function () {
   fetchCurWeather(city);
   fetchFiveDay(city);
   
-
   document.querySelector('#search-query').value = '';
 });
 
@@ -21,7 +20,6 @@ const addCurWeather = (data) => {
     };
 
   renderCurWeather();
-
 };
 
 const addFiveDay = (data) => {
@@ -37,6 +35,7 @@ const addFiveDay = (data) => {
     };
     fiveDayForecast.push(curDay);
   }
+
   renderFiveDay();
 };
 
@@ -94,7 +93,8 @@ const renderFiveDay = () => {
                   <p class="card-text fw-bold">${day.day}</p>
               </div>
           </div>
-      </div>`;
+      </div>
+      `;
   }).join('');
   
   document.querySelector('.five-day').insertAdjacentHTML('beforeend', fiveDayTemplate);
